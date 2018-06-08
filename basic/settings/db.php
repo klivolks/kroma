@@ -62,5 +62,9 @@ class db{
 		$string = mysqli_real_escape_string($this->connect(),$string);
 		return $string;
 	}
+	function query($query){
+		$con=$this->connect();
+		$sql=mysqli_query($con,$query);
+	}
 }
 ?>
