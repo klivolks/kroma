@@ -65,6 +65,7 @@ class db{
 	function query($query){
 		$con=$this->connect();
 		$sql=mysqli_query($con,$query);
+		return $sql;
 	}
 }
 ?>
