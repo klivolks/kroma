@@ -1,4 +1,4 @@
- <?php
+<?php
 
 //This file is used to define database variables
 

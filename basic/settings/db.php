@@ -45,13 +45,21 @@ class db{
 			if($i>0){
 				$string.=',';
 			}
-			$string.="`$key`='$val'";
+			if(is_float($val)){
+				$string.="`$key`=$val";
+			}
+			else{
+				$string.="`$key`='$val'";
+			}
 			$i++;
 		}
 		$con=$this->connect();
 		$now=date("Y-m-d H:i:s");
 		$sql="UPDATE $table SET $string,`updated_at`='$now' WHERE `id`=$id";
-		$sql=mysqli_query($con,$sql);
+		$result=mysqli_query($con,$sql);
+		$e['error'] = mysqli_error($con);
+		$e['query'] = $sql;
+		return $e;
 	}
 	function delete($table,$id){
 		$con=$this->connect();
