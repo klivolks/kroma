@@ -75,5 +75,10 @@ class db{
 		$sql=mysqli_query($con,$query);
 		return $sql;
 	}
+	function version(){
+		$con=$this->connect();
+		$v = mysqli_get_server_info($con);
+		return $v;
+	}
 }
 ?>
