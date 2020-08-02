@@ -16,6 +16,7 @@ class db{
 		}
 		$data['query']=$query;
 		$data['error'] = mysqli_error($con);
+		mysqli_close($con);
 		return $data;
 	}
 	function insert($table,$data){
@@ -36,6 +37,12 @@ class db{
 		$sql="INSERT INTO $table($columns,`created_at`,`updated_at`) VALUES($value,'$now','$now')";
 		mysqli_query($con,$sql);
 		$id=mysqli_insert_id($con);
+		$e = mysqli_error($con);
+		if($e!=''){
+			echo $e;
+			echo $sql;
+		}
+		mysqli_close($con);
 		return $id;
 	}
 	function update($table,$data,$id){
@@ -59,12 +66,14 @@ class db{
 		$result=mysqli_query($con,$sql);
 		$e['error'] = mysqli_error($con);
 		$e['query'] = $sql;
+		mysqli_close($con);
 		return $e;
 	}
 	function delete($table,$id){
 		$con=$this->connect();
 		$sql="DELETE FROM $table WHERE `id`=$id";
 		$sql=mysqli_query($con,$sql);
+		mysqli_close($con);
 	}
 	function escape($string){
 		$string = mysqli_real_escape_string($this->connect(),$string);
@@ -73,11 +82,13 @@ class db{
 	function query($query){
 		$con=$this->connect();
 		$sql=mysqli_query($con,$query);
+		mysqli_close($con);
 		return $sql;
 	}
 	function version(){
 		$con=$this->connect();
 		$v = mysqli_get_server_info($con);
+		mysqli_close($con);
 		return $v;
 	}
 }
